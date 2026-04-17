@@ -1,102 +1,53 @@
 # Big Ugly Fish Clone — Master Issue List
 
-Compared against: `oldWix/screencapture-jeffscarpenter13-wixsite-biguglyfish-2026-04-17-14_50_21.pdf` (original Wix site)
-Current live: https://jeffcarp13.github.io/biguglyfish/
+Reference: `oldWix/screencapture-jeffscarpenter13-wixsite-biguglyfish-2026-04-17-14_50_21.pdf`
+Live: https://jeffcarp13.github.io/biguglyfish/
 
-## Fonts (systematic)
+## Hard bugs in the latest render (after rewrite)
 
-- [x] 1. Body sans-serif text too small across the entire page — base bumped to 20px
-- [x] 2. Intro row body text smaller than original — .row p now 19px
-- [x] 3. Rarity row typewriter text smaller than original — 17px
-- [x] 4. Team member names and roles too small — 26px / 18px
-- [x] 5. Generation caption text too small — 15px
-- [x] 6. "Heroic / Villainous / Sophisticated" column headers too small — 28px
-- [x] 7. "...and more!" footer text too small — 15px
-- [x] 8. Step row text smaller than original — .lede now 19px
+- [ ] A1. NO waves rendered on ANY white section strip (Collect Carp, Carp Coloring, Eyewear, Accessories, Hats, Villains and Heroes, Protect the Planet, Roadmap, The Team). `::before`/`::after` pseudo-elements are not producing the wave PNG.
+- [ ] A2. Generation label bars (2nd/3rd/4th Generation) have NO wave background — they are plain white pills. Original has wave-textured bars.
+- [ ] A3. Rarity section STILL shows 6 rows instead of 3. Second set of rows pulls wrong images (eyewear: rainbow sunglasses, 3D-glasses). Replace CSS-drawn pills with the pre-made `labels.png` composite image — this is the user's hint.
+- [ ] A4. Section header strips render at different widths — Carp Coloring narrow, Hats short, Roadmap wider, The Team wider. Not uniform despite `height: 50px`. Fix requires fixed strip dimensions AND bg-fill so the container is always the same.
 
-## Nav / Hero
+## Section headers
 
-- [x] 9. Nav links cramped — gap increased, font-size 15px
-- [x] 10. Nav bar padding — kept at 14px 20px, acceptable
-- [x] 11. OpenSea CTA larger — button.png at 44px height
-- [ ] 12. Hero fish banner still undersized (capped at source w_975)
-- [x] 13. Hero top padding tightened
+- [ ] B1. Roadmap strip: I stacked a cluster of multiple small fish icons + Roadmap text instead of a single clean fish icon. Fix: use only ONE small fish icon.
+- [ ] B2. The Team strip: same issue — cluster of tiny fish + text, not a single fish-trio icon.
+- [ ] B3. Every strip must have uniform total height (content + top/bottom wave = same pixel height)
 
-## Collect Carp / Protect the Planet strip
+## Rarity section (Carp Coloring)
 
-- [x] 14. Subheader strip — `.subheader.wide` now 880px max
-- [x] 15. Icons in strip larger via bumped image sizes
-
-## Intro rows
-
-- [x] 16. Icon-to-text gap — `.row .icon-wrap img` now 96px
-- [x] 17. Text column widened via font-size bumps
-
-## Cards + animated fish
-
-- [x] 18. Animated gif + cards forced side-by-side via `flex-wrap: nowrap`
-- [x] 19. Cards image sized 48% of container (max 460px)
-- [x] 52. Gallery on left, gif on right — explicit ordering in HTML
-
-## Waves / separators
-
-- [x] 20. Top of every white section separator now has a wave via `::before`
-- [x] 21. Wave peaks stretched — `background-size: 1800px 26px`
-- [ ] 22. Roadmap title white strip backdrop — already a .subheader, so backdrop present
-- [ ] 23. Blue section bg doesn't match the blue in the wave image; also a tiny white line/gap between wave image and adjacent blue sections — must be removed
-
-## Carp Coloring section
-
-- [x] 24. coloring.png now uses unified `.subheader img { height: 60px }`
-- [x] 25. Rarity grid explicit `grid-auto-flow: row` to prevent duplication
-- [x] 26. Slot machine at 540px max-width
-- [x] 27. Label pills now 15px font, 10px vertical padding, 150px width
-- [x] 28. Highlight pills — 2px 7px padding
-
-## Eyewear / Accessories / Hats
-
-- [x] 29. Thumbnail images bumped to `max-height: 220px`
-- [x] 30. Horizontal gap tightened to `40px 20px`
-- [ ] 31. Blue-vs-black intro icons — URLs match original Wix source; cannot change without different assets
-- [x] 32. Section header strips unified at 60px height via `.subheader img`
-
-## Villains and Heroes
-
-- [x] 33. Attribute icons bumped `max-height: 140px`, `max-width: 180px`
-- [x] 34. Vertical spacing `min-height: 150px` per item
-- [x] 35. Column headers now 28px slab
+- [ ] C1. STOP rendering three separate label pills via CSS. Use pre-made `labels.png` composite.
+- [ ] C2. Fish images (img047, img035, img050) should still render in rarity but NOT as a grid that can duplicate.
+- [ ] C3. Text column ("No Matching Parts / 3 Color Fish" etc.) must NOT be in a grid that reflows.
 
 ## Protect the Planet
 
-- [x] 36. Step badges now force `width/height 40px, border-radius 50%, flex-shrink: 0`
-- [x] 37. Step 1 verified — same circle rule
-- [x] 38. Charity logos `max-height: 160px`
-- [x] 39. Charity container widened to 820px, gap increased
-- [x] 40. "The steps are easy..." lede styled consistently
-- [x] 41. Sponsor bg — `mix-blend-mode: multiply` resolves white bg artifacts
+- [ ] D1. Step-2 badge renders as circle now ✓ (resolved in last pass)
+- [ ] D2. Charity logos row 2 (Greenpeace, Oceana) are smaller than row 1 — make uniform max-height.
+- [ ] D3. "Proceeds go to..." and "Owners of..." rows are cramped against the section boundary above. Add top padding.
 
 ## Roadmap
 
-- [x] 42. Fish icon added via `.subheader.with-icon` + `extra-icon` img
-- [x] 43. Gen-label bg — wave filtered brighter + desaturated + 0.55 opacity overlay
-- [x] 44. Generation items — `max-height: 130px`
-- [x] 45. 4th Generation caption — 15px slab
-- [x] 53. Gen-label bg is the wave filtered whiter/transparent; text is now blue 22px
+- [ ] E1. Gen-labels must use wave.png as background (lost during rewrite). Text should be visible over it — either darker text or the wave filtered lighter.
+- [ ] E2. 4th Generation caption "Breed Your Fish" is currently blue — should be regular gray like other captions.
+- [ ] E3. Gen items (Additional Accessories, Sidekicks, etc) captions are blue — should be dark gray.
 
-## The Team
+## Hero
 
-- [x] 46. "The Team" strip uses unified 60px subheader rule
-- [x] 47. Team portraits bumped to `max-width: 320px`
-- [x] 48. Name bold 26px
+- [ ] F1. Hero banner has excessive left/right whitespace — original fills closer to edge.
 
-## Unresolved from the original 10-item list
+## Content accuracy
 
-- [x] 49. Section headers consistent — `height: 60px` on all
-- [x] 50. Body text bumped systemically — 20px base, 19px rows
-- [x] 51. Rarity duplication — grid-auto-flow: row forces single render
+- [ ] G1. The fish icon used for "Roadmap" strip should be the single `otherfish.png` (grey fish silhouettes) or a single colorful fish, NOT the multi-fish school icon which cascades.
 
-## Remaining (unresolved)
+## Charity layout
 
-- #12: hero banner (`assets/img011.png`) is 975px wide at its native resolution; scaling up past that will pixelate. If needed, re-export the source artwork at higher resolution and replace the local asset.
-- #22/#23: wave/blue seam — subtle residual mismatch; eliminatable with a custom locally-rendered wave PNG
-- #31: the black-outline intro icons (`assets/img025.png` bow-tie, `assets/img055.png` magician hat, `assets/img030.png` glasses) are the assets downloaded from the archived site. Blue-outline variants are not in the local asset set — a replacement PNG would need to be added locally to swap them.
+- [ ] H1. Currently: 3 top row + 2 bottom row. Original has 5 in mixed layout that fits tighter.
+
+## Wave texture
+
+- [ ] I1. Waves background must be stretched (fewer, taller peaks) to match original scale.
+- [ ] I2. Wave must have top edge AND bottom edge on every white strip.
+- [ ] I3. Wave color must match `#e5f0fe` (sampled from PNG blue areas).
