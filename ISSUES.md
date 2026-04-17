@@ -97,6 +97,6 @@ Current live: https://jeffcarp13.github.io/biguglyfish/
 
 ## Remaining (unresolved)
 
-- #12: hero banner size capped by Wix source asset width
-- #22/#23: wave/blue color seam subtle but hard to eliminate without a custom wave PNG
-- #31: colored-variant icon URLs — need to be provided since originals in Wix HTML are the current URLs
+- #12: hero banner (`assets/img011.png`) is 975px wide at its native resolution; scaling up past that will pixelate. If needed, re-export the source artwork at higher resolution and replace the local asset.
+- #22/#23: wave/blue seam — subtle residual mismatch; eliminatable with a custom locally-rendered wave PNG
+- #31: the black-outline intro icons (`assets/img025.png` bow-tie, `assets/img055.png` magician hat, `assets/img030.png` glasses) are the assets downloaded from the archived site. Blue-outline variants are not in the local asset set — a replacement PNG would need to be added locally to swap them.
