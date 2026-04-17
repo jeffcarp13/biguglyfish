@@ -22,9 +22,9 @@
     margin: 0; padding: 0;
     background: var(--bg-blue);
     color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.5;
+    font-family: var(--slab);
+    font-size: 14px;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
   img { max-width: 100%; height: auto; display: block; }
@@ -68,39 +68,42 @@
 
   /* SECTIONS */
   .blue  { background: var(--bg-blue); padding: 34px 20px; }
-  .white-band {
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-  }
-  .white-band img {
-    display: block;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-  }
 
   /* HERO */
   .hero { background: var(--bg-blue); padding: 28px 20px 18px; text-align: center; }
   .hero-banner {
-    max-width: 980px;
+    max-width: 1100px;
     margin: 0 auto;
   }
   .hero-banner img { width: 100%; height: auto; }
 
-  /* COLLECT + PROTECT (SubHeader) */
+  /* WHITE STRIP (section headers + collect/protect) */
   .subheader {
-    background: var(--bg-blue);
-    padding: 0;
+    background: #fff;
+    padding: 14px 20px;
     text-align: center;
+    position: relative;
   }
+  .subheader::before,
+  .subheader::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 18px;
+    background-image: url("https://static.wixstatic.com/media/58bef1_5ac06cb3b15c495aa88d13a585644497~mv2.png/v1/fill/w_3410,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Waves.png");
+    background-repeat: repeat-x;
+    background-size: auto 18px;
+    pointer-events: none;
+  }
+  .subheader::before { top: -1px; background-position: bottom; }
+  .subheader::after  { bottom: -1px; transform: scaleY(-1); background-position: bottom; }
   .subheader img {
     display: block;
     margin: 0 auto;
-    width: 100%;
-    max-width: 980px;
+    width: auto;
+    max-width: 100%;
   }
+  .subheader.wide img { max-width: 1100px; width: 100%; }
 
   /* BODY ROWS */
   .rows {
@@ -118,7 +121,7 @@
     min-height: 64px;
   }
   .row .icon-wrap img { max-width: 72px; max-height: 64px; width: auto; }
-  .row p { margin: 0; font-size: 14.5px; line-height: 1.55; color: #3a3a3a; }
+  .row p { margin: 0; font-size: 13.5px; line-height: 1.55; color: #3a3a3a; font-family: var(--slab); }
 
   .figure-center {
     display: flex; justify-content: center;
@@ -203,7 +206,7 @@
     gap: 22px; align-items: center;
   }
   .grid-intro img { max-width: 56px; margin: 0 auto; }
-  .grid-intro p { margin: 0; font-size: 14.5px; color: #3a3a3a; }
+  .grid-intro p { margin: 0; font-size: 13.5px; color: #3a3a3a; font-family: var(--slab); }
 
   .thumb-grid {
     max-width: 560px; margin: 0 auto;
@@ -262,16 +265,32 @@
   .charities img { max-height: 90px; width: auto; }
 
   /* ROADMAP */
-  .roadmap-band { max-width: 680px; margin: 10px auto; padding: 0 10px; }
+  .roadmap-band { max-width: 760px; margin: 0 auto; padding: 0; }
   .gen-label {
     background: #fff;
-    border-radius: 4px;
+    border-radius: 2px;
     text-align: center;
-    padding: 8px 16px;
+    padding: 10px 16px;
     font-size: 13px; color: #333;
-    margin: 0 auto 14px;
-    max-width: 520px;
+    margin: 0 auto 18px;
+    max-width: none;
+    width: 100%;
+    font-family: var(--slab);
+    position: relative;
   }
+  .gen-label::before,
+  .gen-label::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 10px;
+    background-image: url("https://static.wixstatic.com/media/58bef1_5ac06cb3b15c495aa88d13a585644497~mv2.png/v1/fill/w_3410,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Waves.png");
+    background-repeat: repeat-x;
+    background-size: auto 10px;
+    pointer-events: none;
+  }
+  .gen-label::before { top: -1px; }
+  .gen-label::after  { bottom: -1px; transform: scaleY(-1); }
   .gen-items {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 20px; margin-bottom: 22px;
@@ -299,8 +318,9 @@
     margin: 0 0 3px;
     font-weight: 700; font-size: 16px;
     color: #222;
+    font-family: var(--slab);
   }
-  .team .member p  { margin: 0; color: #555; font-size: 13px; }
+  .team .member p  { margin: 0; color: #555; font-size: 13px; font-family: var(--slab); }
 
   footer {
     background: var(--bg-blue);
@@ -356,7 +376,7 @@
 </section>
 
 <!-- SUBHEADER: Collect Carp | Protect the Planet (single image) -->
-<section class="subheader">
+<section class="subheader wide">
   <img src="https://static.wixstatic.com/media/58bef1_701a73e109fb4fef9d31ea7c6759dac7~mv2.png/v1/crop/x_0,y_0,w_4170,h_435/fill/w_1748,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/SubHeader.png" alt="Collect Carp. Protect the Planet.">
 </section>
 
