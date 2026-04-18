@@ -118,20 +118,18 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 20px;
-    overflow: hidden;
-    /* The source PNG (img028.png) has wavy peaks at the BOTTOM, a flat
-       bottom edge, and a faint pale-blue wash ABOVE the peaks. We want
-       ONLY the peaks to render at the top of each blue section, pointing
-       upward into the white strip above.
-       Approach: flip the element vertically and size the background so
-       it's large enough that only the peaks region lands within the
-       element's height, and the faint-wash region is pushed off-screen
-       beyond the element's bounds. */
+    height: 22px;
+    /* Source PNG (img028.png) is 3410x60 with wavy peaks at the BOTTOM ~20px
+       and a faint pale-blue wash at top. We want ONLY the peaks pointing
+       UP into the white strip above.
+       Approach: render the PNG scaled to cover and anchor to its BOTTOM
+       so the peaks sit inside the element; then flip vertically so peaks
+       point up. background-position uses the PRE-transform coordinate
+       space. */
     background-image: url("assets/img028.png");
     background-repeat: repeat-x;
-    background-position: top center;
-    background-size: auto 65px;
+    background-position: center bottom;
+    background-size: auto 60px;
     transform: scaleY(-1);
     pointer-events: none;
   }
