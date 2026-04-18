@@ -15,11 +15,10 @@
     --nav-link: #4a74b5;
     --slab: "Special Elite", "American Typewriter", Courier, monospace;
     --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    /* uniform header image sizing: Collect Carp (text 24px) sets the baseline;
-       boost by 20% -> target visible text height ~= 29px. Banner-image height
-       chosen so embedded text reads at that size. */
-    --head-banner-h: 58px;
-    --head-icon-h: 48px;
+    /* Per-image heights so embedded text reads at roughly the same visible
+       height across all section headers. Values tuned per the aspect ratio
+       and text-to-image ratio of each banner PNG. */
+    --head-icon-h: 56px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 72px; }
@@ -82,14 +81,23 @@
     gap: 14px;
     flex-wrap: wrap;
   }
-  .strip img.head-icon   { height: var(--head-icon-h); width: auto; }
-  .strip img.head-banner { height: var(--head-banner-h); width: auto; max-width: 94%; }
+  .strip img.head-icon { height: var(--head-icon-h); width: auto; }
+  /* Per-banner heights tuned so embedded text renders at roughly the same size. */
+  .strip img.hb-carp-coloring   { height: 80px; width: auto; max-width: 94%; }   /* 780x158  +25% */
+  .strip img.hb-eyewear         { height: 50px; width: auto; max-width: 94%; }   /* 281x78   +20% */
+  .strip img.hb-accessories     { height: 130px; width: auto; max-width: 94%; }  /* 730x232  +50% */
+  .strip img.hb-hats            { height: 130px; width: auto; max-width: 94%; }  /* 392x188  +50% */
+  .strip img.hb-villains        { height: 95px; width: auto; max-width: 94%; }   /* 1022x174 +25% */
+  .strip img.hb-roadmap         { height: 70px; width: auto; max-width: 94%; }   /* 364x98   +5% */
+  .strip img.hb-team            { height: 52px; width: auto; max-width: 94%; }   /* 264x53   +5% */
   .strip .head-text {
     font-family: var(--slab);
-    font-size: 34px;
+    font-size: 40px;  /* Collect Carp / Protect the Planet slab — +20% baseline */
     color: #2b2b2b;
     line-height: 1;
   }
+  .strip.pp .head-text { font-size: 46px; }  /* Protect the Planet +15% over base */
+  .strip.pp img.head-icon { height: 68px; }
   .strip.dual { gap: 60px; }
   .strip.dual .pair {
     display: inline-flex; align-items: center; gap: 12px;
@@ -162,25 +170,14 @@
     .figure-center img { max-width: 90%; }
   }
 
-  /* SLOT — cropped to show only the slot-machine portion of the composite
-     image. The source (img058.png) contains the slot machine in its top
-     ~45% and the SPECIAL/RARE/ENDANGERED chart below. We hide the bottom. */
+  /* SLOT — show full composite image (slot machine + baked-in
+     SPECIAL/RARE/ENDANGERED chart). No extra rows rendered below it. */
   .slot {
-    max-width: 520px;
+    max-width: 420px;
     margin: 28px auto 0;
     padding: 0 20px;
   }
-  .slot .crop {
-    width: 100%;
-    aspect-ratio: 687 / 385;
-    overflow: hidden;
-    margin: 0 auto;
-  }
-  .slot .crop img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  .slot img { margin: 0 auto; width: 100%; }
 
   /* GRID INTRO (shared by Eyewear / Accessories / Hats) */
   .grid-intro {
@@ -268,13 +265,13 @@
   }
   .pp-prose .lede { margin: 10px 0; font-size: 17px; color: #3a3a3a; }
   .step-row {
-    display: grid;
-    grid-template-columns: 36px 1fr;
-    gap: 14px;
+    display: flex;
     align-items: center;
+    gap: 14px;
     margin: 10px 0;
   }
   .step-badge {
+    flex: 0 0 28px;
     width: 28px; height: 28px;
     min-width: 28px; min-height: 28px;
     max-width: 28px; max-height: 28px;
@@ -284,7 +281,7 @@
     color: #fff; font-weight: 700; font-size: 14px;
     line-height: 1;
     padding: 0;
-    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
   }
   .step-badge.green { background: #2ea04f; }
   .step-badge.blue  { background: #2095f2; }
@@ -322,21 +319,18 @@
     overflow: hidden;
     isolation: isolate;
   }
-  /* Whitened, transparent-above-wave background so the wave reads as a band
-     of water at the BOTTOM half of the label and the top half fades to the
-     blue section behind it. */
-  .gen-label::before {
-    content: "";
-    position: absolute;
-    inset: 0;
+  /* Generation label uses the wave PNG scaled to fill the label. The wave's
+     blue tint reads as the background; the part of the PNG above the wave
+     peaks is white and blends into a white base color. We layer:
+     1) a white base (always white)
+     2) the wave image scaled so peaks sit ~30% down, revealing the blue
+        wave band across most of the label. */
+  .gen-label {
+    background-color: #fff;
     background-image: url("assets/img028.png");
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 220%;
-    background-position-y: 100%;
-    filter: brightness(1.15) saturate(0.5);
-    opacity: 0.9;
-    z-index: -1;
+    background-position: center 60%;
+    background-size: 100% 180%;
   }
   .gen-items {
     display: grid;
@@ -375,10 +369,20 @@
     flex-direction: column;
     align-items: center;
   }
-  .team .member img {
-    width: 230px; /* was 200px -> +15% */
+  .team .member .portrait {
+    width: 230px;     /* was 200px -> +15% */
+    height: 200px;    /* fixed slot so captions all sit at the same y */
     max-width: 100%;
     margin: 0 auto 14px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .team .member .portrait img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     display: block;
   }
   .team .member h4 {
@@ -460,7 +464,7 @@
 
 <!-- CARP COLORING -->
 <div class="strip" id="colors">
-  <img class="head-banner" src="assets/img019.png" alt="Carp Coloring">
+  <img class="hb-carp-coloring" src="assets/img019.png" alt="Carp Coloring">
 </div>
 
 <section class="blue">
@@ -472,15 +476,13 @@
   </div>
 
   <div class="slot">
-    <div class="crop">
-      <img src="assets/img058.png" alt="Slot machine">
-    </div>
+    <img src="assets/img058.png" alt="Slot machine with SPECIAL, RARE, and ENDANGERED rarity tiers">
   </div>
 </section>
 
 <!-- EYEWEAR -->
 <div class="strip" id="attributes">
-  <img class="head-banner" src="assets/img057.png" alt="Eyewear">
+  <img class="hb-eyewear" src="assets/img057.png" alt="Eyewear">
 </div>
 
 <section class="blue">
@@ -501,7 +503,7 @@
 
 <!-- ACCESSORIES -->
 <div class="strip">
-  <img class="head-banner" src="assets/img033.png" alt="Accessories">
+  <img class="hb-accessories" src="assets/img033.png" alt="Accessories">
 </div>
 
 <section class="blue">
@@ -524,7 +526,7 @@
 
 <!-- HATS -->
 <div class="strip">
-  <img class="head-banner" src="assets/img007.png" alt="Hats">
+  <img class="hb-hats" src="assets/img007.png" alt="Hats">
 </div>
 
 <section class="blue">
@@ -548,7 +550,7 @@
 
 <!-- VILLAINS & HEROES -->
 <div class="strip">
-  <img class="head-banner" src="assets/img017.png" alt="Villains & Heroes">
+  <img class="hb-villains" src="assets/img017.png" alt="Villains & Heroes">
 </div>
 
 <section class="blue">
@@ -606,7 +608,7 @@
 </section>
 
 <!-- PROTECT THE PLANET -->
-<div class="strip" id="conservation">
+<div class="strip pp" id="conservation">
   <img class="head-icon" src="assets/img046.png" alt="">
   <span class="head-text">Protect the Planet.</span>
 </div>
@@ -647,7 +649,8 @@
 
 <!-- ROADMAP -->
 <div class="strip" id="roadmap">
-  <img class="head-banner" src="assets/img009.png" alt="Roadmap">
+  <img class="head-icon" src="assets/img032.png" alt="">
+  <img class="hb-roadmap" src="assets/img009.png" alt="Roadmap">
 </div>
 
 <section class="blue">
@@ -692,23 +695,23 @@
 
 <!-- THE TEAM -->
 <div class="strip">
-  <img class="head-banner" src="assets/img074.png" alt="The Team">
+  <img class="hb-team" src="assets/img074.png" alt="The Team">
 </div>
 
 <section class="blue">
   <div class="team">
     <div class="member">
-      <img src="assets/img070.png" alt="Jeff">
+      <div class="portrait"><img src="assets/img070.png" alt="Jeff"></div>
       <h4>Jeff</h4>
       <p>The Artist</p>
     </div>
     <div class="member">
-      <img src="assets/img055.png" alt="Scott">
+      <div class="portrait"><img src="assets/img055.png" alt="Scott"></div>
       <h4>Scott</h4>
       <p>The Developer</p>
     </div>
     <div class="member">
-      <img src="assets/img002.png" alt="Is This You?">
+      <div class="portrait"><img src="assets/img002.png" alt="Is This You?"></div>
       <h4>Is This You?</h4>
       <p>The Community Manager</p>
     </div>
