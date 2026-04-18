@@ -27,7 +27,7 @@
     background: var(--bg-blue);
     color: var(--text);
     font-family: var(--sans);
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
@@ -83,21 +83,21 @@
   }
   .strip img.head-icon { height: var(--head-icon-h); width: auto; }
   /* Per-banner heights tuned so embedded text renders at roughly the same size. */
-  .strip img.hb-carp-coloring   { height: 80px; width: auto; max-width: 94%; }   /* 780x158  +25% */
-  .strip img.hb-eyewear         { height: 50px; width: auto; max-width: 94%; }   /* 281x78   +20% */
-  .strip img.hb-accessories     { height: 130px; width: auto; max-width: 94%; }  /* 730x232  +50% */
-  .strip img.hb-hats            { height: 130px; width: auto; max-width: 94%; }  /* 392x188  +50% */
-  .strip img.hb-villains        { height: 95px; width: auto; max-width: 94%; }   /* 1022x174 +25% */
-  .strip img.hb-roadmap         { height: 70px; width: auto; max-width: 94%; }   /* 364x98   +5% */
-  .strip img.hb-team            { height: 52px; width: auto; max-width: 94%; }   /* 264x53   +5% */
+  .strip img.hb-carp-coloring   { height: 80px;  width: auto; max-width: 94%; }   /* +25% */
+  .strip img.hb-eyewear         { height: 65px;  width: auto; max-width: 94%; }   /* +30% over prior */
+  .strip img.hb-accessories     { height: 130px; width: auto; max-width: 94%; }   /* +50% */
+  .strip img.hb-hats            { height: 117px; width: auto; max-width: 94%; }   /* -10% from prior */
+  .strip img.hb-villains        { height: 86px;  width: auto; max-width: 94%; }   /* -10% from prior */
+  .strip img.hb-roadmap         { height: 63px;  width: auto; max-width: 94%; }   /* -10% from prior */
+  .strip img.hb-team            { height: 57px;  width: auto; max-width: 94%; }   /* +10% from prior */
   .strip .head-text {
     font-family: var(--slab);
-    font-size: 40px;  /* Collect Carp / Protect the Planet slab — +20% baseline */
+    font-size: 40px;
     color: #2b2b2b;
     line-height: 1;
   }
-  .strip.pp .head-text { font-size: 46px; }  /* Protect the Planet +15% over base */
-  .strip.pp img.head-icon { height: 68px; }
+  .strip.pp .head-text { font-size: 44px; }
+  .strip.pp img.head-icon { height: 65px; }
   .strip.dual { gap: 60px; }
   .strip.dual .pair {
     display: inline-flex; align-items: center; gap: 12px;
@@ -118,14 +118,20 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 28px;
+    height: 20px;
+    overflow: hidden;
+    /* The source PNG (img028.png) has wavy peaks at the BOTTOM, a flat
+       bottom edge, and a faint pale-blue wash ABOVE the peaks. We want
+       ONLY the peaks to render at the top of each blue section, pointing
+       upward into the white strip above.
+       Approach: flip the element vertically and size the background so
+       it's large enough that only the peaks region lands within the
+       element's height, and the faint-wash region is pushed off-screen
+       beyond the element's bounds. */
     background-image: url("assets/img028.png");
     background-repeat: repeat-x;
     background-position: top center;
-    background-size: auto 125%;
-    /* whiten the wave PNG so peaks are the blue and the area above peaks is
-       indistinguishable from the white strip above. */
-    filter: brightness(1.08) saturate(0.6);
+    background-size: auto 65px;
     transform: scaleY(-1);
     pointer-events: none;
   }
@@ -147,7 +153,7 @@
     min-height: 56px;
   }
   .row .icon-wrap img { max-width: 60px; max-height: 58px; }
-  .row p { margin: 0; font-size: 17px; line-height: 1.5; color: #3a3a3a; }
+  .row p { margin: 0; font-size: 21px; line-height: 1.5; color: #3a3a3a; }
 
   /* FIGURE CENTER (cards + animated gif side-by-side) */
   .figure-center {
@@ -173,7 +179,7 @@
   /* SLOT — show full composite image (slot machine + baked-in
      SPECIAL/RARE/ENDANGERED chart). No extra rows rendered below it. */
   .slot {
-    max-width: 420px;
+    max-width: 504px; /* 420 + 20% */
     margin: 28px auto 0;
     padding: 0 20px;
   }
@@ -188,7 +194,7 @@
     align-items: center;
   }
   .grid-intro img { max-width: 54px; margin: 0 auto; }
-  .grid-intro p { margin: 0; font-size: 17px; color: #3a3a3a; }
+  .grid-intro p { margin: 0; font-size: 21px; color: #3a3a3a; }
 
   /* THUMB GRID */
   .thumb-grid {
@@ -212,6 +218,9 @@
     display: flex; flex-direction: column;
     gap: 16px;
   }
+  .vh-intro .evil,
+  .vh-intro .heroic,
+  .vh-intro .soph { font-weight: 700; }
   .vh-intro .evil   { color: #ef3b2a; }
   .vh-intro .heroic { color: #2095f2; }
   .vh-intro .soph   { color: #8b5ea0; }
@@ -238,7 +247,7 @@
     min-height: 90px;
   }
   .vh-col li img { max-height: 80px; max-width: 130px; }
-  .vh-col li .pts { font-family: var(--slab); font-size: 17px; }
+  .vh-col li .pts { font-family: var(--slab); font-size: 21px; }
   .vh-col .more {
     text-align: center;
     font-family: var(--slab);
@@ -263,7 +272,7 @@
   @media (max-width: 720px) {
     .pp-prose { padding-left: 0; }
   }
-  .pp-prose .lede { margin: 10px 0; font-size: 17px; color: #3a3a3a; }
+  .pp-prose .lede { margin: 10px 0; font-size: 21px; color: #3a3a3a; }
   .step-row {
     display: flex;
     align-items: center;
@@ -271,66 +280,57 @@
     margin: 10px 0;
   }
   .step-badge {
-    flex: 0 0 28px;
-    width: 28px; height: 28px;
-    min-width: 28px; min-height: 28px;
-    max-width: 28px; max-height: 28px;
+    flex: 0 0 32px;
+    width: 32px; height: 32px;
+    min-width: 32px; min-height: 32px;
+    max-width: 32px; max-height: 32px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center; justify-content: center;
-    color: #fff; font-weight: 700; font-size: 14px;
+    color: #fff; font-weight: 700; font-size: 16px;
     line-height: 1;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--sans);
+    text-align: center;
   }
   .step-badge.green { background: #2ea04f; }
   .step-badge.blue  { background: #2095f2; }
-  .step-row p { margin: 0; font-size: 17px; color: #3a3a3a; }
+  .step-row p { margin: 0; font-size: 21px; color: #3a3a3a; }
 
   .charities {
-    max-width: 780px;
+    max-width: 1100px;
     margin: 36px auto 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 28px 40px;
+    gap: 28px 28px;
   }
   .charities img {
-    max-height: 110px;
-    max-width: 180px;
+    max-height: 90px;
+    max-width: 150px;
     height: auto; width: auto;
     mix-blend-mode: multiply;
+    flex: 0 1 auto;
+  }
+  /* On mid-width viewports, split 3 + 2 rather than 4 + 1. */
+  @media (max-width: 1100px) and (min-width: 641px) {
+    .charities { max-width: 620px; }
   }
 
   /* ROADMAP */
   .roadmap-band { max-width: 640px; margin: 0 auto; }
   .gen-label {
-    position: relative;
     text-align: center;
-    padding: 14px 18px;
-    font-size: 16px;
-    color: #3a3a3a;
+    padding: 12px 18px;
+    font-size: 25px;      /* ~15% larger than surrounding body */
+    font-weight: 700;
+    color: #2b2b2b;
     margin: 0 auto 22px;
     max-width: 560px;
     width: 100%;
     font-family: var(--sans);
-    border-radius: 4px;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  /* Generation label uses the wave PNG scaled to fill the label. The wave's
-     blue tint reads as the background; the part of the PNG above the wave
-     peaks is white and blends into a white base color. We layer:
-     1) a white base (always white)
-     2) the wave image scaled so peaks sit ~30% down, revealing the blue
-        wave band across most of the label. */
-  .gen-label {
-    background-color: #fff;
-    background-image: url("assets/img028.png");
-    background-repeat: no-repeat;
-    background-position: center 60%;
-    background-size: 100% 180%;
   }
   .gen-items {
     display: grid;
